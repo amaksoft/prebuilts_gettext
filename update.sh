@@ -10,13 +10,14 @@ fi
 TARGET_BINARIES="gettext-runtime/src/envsubst"
 ROOT_PATH=${PWD}
 
+rm -rf build
 mkdir -p build
 pushd build
 wget -O gettext-${VERSION}.tar.gz https://ftp.gnu.org/pub/gnu/gettext/gettext-${VERSION}.tar.gz
 tar xzf gettext-${VERSION}.tar.gz
 cd gettext-${VERSION}/
 ./configure
-make
+make envsubst_LDFLAGS="-all-static"
 strip ${TARGET_BINARIES}
 
 OS="$(uname | sed 's/./\L&/g')"
